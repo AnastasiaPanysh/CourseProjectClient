@@ -14,9 +14,12 @@ import {
 import { GoogleButton } from "../../lips/SocialButtons";
 
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../../services/user";
 
 function RegistrationPage(props: PaperProps) {
+  const [createUser] = useCreateUserMutation();
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -31,6 +34,13 @@ function RegistrationPage(props: PaperProps) {
         val.length < 6 ? "Password should include at least 6 characters" : null,
     },
   });
+
+  const navigate = useNavigate();
+  function sendRequest() {
+    createUser(form.values).then(() => {
+      navigate("/");
+    });
+  }
 
   return (
     <Paper
@@ -101,7 +111,7 @@ function RegistrationPage(props: PaperProps) {
               Already have an account? Login
             </Anchor>
           </Link>
-          <Button type="submit" radius="xl">
+          <Button onClick={sendRequest} type="submit" radius="xl">
             Register
           </Button>
         </Group>
