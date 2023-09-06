@@ -1,4 +1,4 @@
-import { Button, ButtonProps, Group } from '@mantine/core';
+import { Button, ButtonProps } from '@mantine/core';
 import { GoogleIcon } from './icons/GoogleIcon';
 
 export function GoogleButton(props: ButtonProps) {

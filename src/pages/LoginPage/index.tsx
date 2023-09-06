@@ -1,4 +1,3 @@
-import { useToggle, upperFirst } from "@mantine/hooks";
 import {
   TextInput,
   PasswordInput,
@@ -8,7 +7,6 @@ import {
   PaperProps,
   Button,
   Divider,
-  Checkbox,
   Anchor,
   Stack,
 } from "@mantine/core";

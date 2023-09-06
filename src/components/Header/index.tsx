@@ -6,7 +6,7 @@ function Header() {
   return (
     <div className={style.wrapper}>
       <Text size="lg" weight={500}>
-        WHAT SHOULD U WATCH
+        WHAT SHOULD U WATCH/READ/PLAY
       </Text>
       <div className={style.containerBtns}>
         <Link to="/login">
