@@ -10,7 +10,7 @@ import {
   Anchor,
   Stack,
 } from "@mantine/core";
-import { GoogleButton } from "../../lips/SocialButtons";
+import { GoogleButton } from "../../assets/SocialButtons";
 
 import { useForm } from "@mantine/form";
 import { Link } from "react-router-dom";

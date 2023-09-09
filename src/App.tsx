@@ -3,15 +3,21 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ReviewPage from "./pages/ReviewPage";
+import Layout from "./components/Layout";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />}></Route>
-      <Route path="/review/:id" element={<ReviewPage />}></Route>
-      <Route path="/login" element={<LoginPage />}></Route>
-      <Route path="/reg" element={<RegistrationPage />}></Route>
-    </Routes>
+    <ThemeProvider>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/review/:id" element={<ReviewPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/reg" element={<RegistrationPage />}></Route>
+        </Routes>
+      </Layout>
+    </ThemeProvider>
   );
 }
 
