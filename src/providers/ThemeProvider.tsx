@@ -1,20 +1,20 @@
-import React, { createContext, Dispatch, SetStateAction, ReactNode, useState } from "react";
+import { createContext, useMemo, useState, ReactNode, useContext } from 'react';
 
-type TypeSetState<T> = Dispatch<SetStateAction<T>>;
+// Определите тип контекста
+type IThemeContextType = {
+  isDark: boolean;
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-interface IContent {
-  type: "light" | "dark";
-  setType: TypeSetState<"light" | "dark">;
-}
-
-const ThemeContext = createContext<IContent>({ type: "light", setType: () => {} });
+export const ThemeContext = createContext<IThemeContextType>({
+  isDark: false,
+  setIsDark: () => {}, 
+});
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [type, setType] = useState<"light" | "dark">("light");
+  const [isDark, setIsDark] = useState(true);
 
-  return (
-    <ThemeContext.Provider value={{ type, setType }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  const value = useMemo(() => ({ isDark, setIsDark }), [isDark]);
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };

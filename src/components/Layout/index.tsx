@@ -1,7 +1,19 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
+import cn from 'classnames'
+import useTheme from '../../hooks/useTheme'
 
-function Layout({ children }: { children: ReactNode }) {
-  return <div className="layout">{children}</div>;
+const Layout = ({ children }: { children: ReactNode }) => {
+	const { isDark } = useTheme()
+
+	return (
+		<div
+			className={cn('layout', {
+				dark: isDark,
+			})}
+		>
+			{children}
+		</div>
+	)
 }
 
-export default Layout;
+export default Layout

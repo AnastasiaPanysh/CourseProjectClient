@@ -4,6 +4,8 @@
   border: 1px solid #eaebed;
   border-radius: 12px;
   margin: 20px 0;
+  position: relative;
+
 }
 
 .wrapper:hover {
@@ -17,21 +19,21 @@
 }
 
 .content {
-  width: 650px;
-  height: 90px;
+  height: 90px; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .content-wrapp{
   display: flex;
-  justify-content: space-between;
 }
-.content-wrapp div{
+.content-wrapp .rating{
   display: flex;
+  position: absolute;
+  right: 5%;
 }
 
-.vacancy-h {
+.film-h {
   font: 600 24px 'Inter';
   line-height: 24px;
   color: #5e96fc;

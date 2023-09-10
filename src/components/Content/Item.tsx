@@ -9,11 +9,12 @@ function Item({ filmItem }:any) {
           <div className={style["content"]}>
             <div className={style["content-wrapp"]}>
               <h2 className={style["film-h"]}>{filmItem.title}</h2>
-              <div>
+              <div className={style["rating"]}>
                 <div className={style["star"]}></div>
                 <p>{filmItem.grade}</p>
               </div>
-            </div>
+            </div >
+
             <div className={style["flex"]}>
               <p className={style["category"]}>{filmItem.category}</p>
               <p>{filmItem.name}</p>
