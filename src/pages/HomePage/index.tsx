@@ -12,21 +12,17 @@ function HomePage() {
     ratingTo: "",
   });
 
-  const [searchString, setSearchString] = useState('');
-
+  const [searchString, setSearchString] = useState("");
 
   return (
     <div className={style.wrapper}>
-      <Header />
-
+         <Header />
       <div className={style.preview}>
         <Filters setExpression={setExpression} />
-                
         <div className={style.content}>
           <Search setSearchString={setSearchString} />
           <List expression={expression} searchString={searchString} />
         </div>
-
       </div>
     </div>
   );

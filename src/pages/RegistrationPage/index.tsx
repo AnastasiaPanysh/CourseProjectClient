@@ -16,6 +16,11 @@ import { GoogleButton } from "../../assets/SocialButtons";
 import { useForm } from "@mantine/form";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../services/user";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 
 function RegistrationPage(props: PaperProps) {
   const [createUser] = useCreateUserMutation();
@@ -42,6 +47,17 @@ function RegistrationPage(props: PaperProps) {
     });
   }
 
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Paper
       style={{ width: "600px", margin: "0 auto" }}
@@ -55,7 +71,7 @@ function RegistrationPage(props: PaperProps) {
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
+        <GoogleButton onClick={handleGoogleSignIn} radius="xl">Google</GoogleButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
