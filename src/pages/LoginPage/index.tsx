@@ -19,7 +19,6 @@ function LoginPage(props: PaperProps) {
   const form = useForm({
     initialValues: {
       email: "",
-      name: "",
       password: "",
       terms: true,
     },
