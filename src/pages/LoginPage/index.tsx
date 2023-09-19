@@ -13,14 +13,17 @@ import {
 import { GoogleButton } from "../../assets/SocialButtons";
 
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../../services/user";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"; // Импортируйте методы для аутентификации Firebase
 
 function LoginPage(props: PaperProps) {
+  const [getUser] = useCreateUserMutation();
+
   const form = useForm({
     initialValues: {
       email: "",
       password: "",
-      terms: true,
     },
 
     validate: {
@@ -29,6 +32,18 @@ function LoginPage(props: PaperProps) {
         val.length < 6 ? "Password should include at least 6 characters" : null,
     },
   });
+
+  const navigate = useNavigate();
+
+  function sendRequest() {
+    getUser(form.values).then(() => {
+      navigate("/");
+    });
+  }
+
+  const handleGoogleLogin = async () => {
+
+  };
 
   return (
     <Paper
@@ -48,7 +63,7 @@ function LoginPage(props: PaperProps) {
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form onSubmit={form.onSubmit(() => handleGoogleLogin())}>
         <Stack>
           <TextInput
             required
@@ -78,10 +93,10 @@ function LoginPage(props: PaperProps) {
         <Group position="apart" mt="xl">
           <Link to="/reg">
             <Anchor component="button" type="button" color="dimmed" size="xs">
-              "Don't have an account? Register
+              Don't have an account? Register
             </Anchor>
           </Link>
-          <Button type="submit" radius="xl">
+          <Button onClick={sendRequest} type="submit" radius="xl">
             Login
           </Button>
         </Group>

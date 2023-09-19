@@ -3,9 +3,15 @@ import { Link } from "react-router-dom";
 import { Text, Button } from "@mantine/core";
 import useTheme from "../../hooks/useTheme";
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { useUserStorage } from '../../storage/userStorage'; 
 
 function Header() {
   const { isDark, setIsDark } = useTheme();
+  const { user, clearUserAndToken } = useUserStorage();
+
+  const handleLogout = () => {
+    clearUserAndToken();
+  };
 
   return (
     <div className={style.wrapper}>
@@ -16,12 +22,18 @@ function Header() {
         WHAT SHOULD U WATCH/READ/PLAY
       </Text>
       <div className={style.containerBtns}>
-        <Link to="/login">
-          <Button>Sign in</Button>
-        </Link>
-        <Link to="/reg">
-          <Button variant="outline">Sign up</Button>
-        </Link>
+        {user ? (
+          <Button onClick={handleLogout}>LogOut</Button>
+        ) : (
+          <>
+            <Link to="/login">
+              <Button>Sign in</Button>
+            </Link>
+            <Link to="/reg">
+              <Button variant="outline">Sign up</Button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

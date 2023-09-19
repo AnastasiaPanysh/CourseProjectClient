@@ -16,20 +16,23 @@ import { GoogleButton } from "../../assets/SocialButtons";
 import { useForm } from "@mantine/form";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../services/user";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { useUserStorage } from "../../storage/userStorage";
+import { useEffect } from "react";
 
 function RegistrationPage(props: PaperProps) {
   const [createUser] = useCreateUserMutation();
+  const {user,setUserAndToken,clearUserAndToken} = useUserStorage()
 
   const form = useForm({
     initialValues: {
-      email: "",
       name: "",
+      email: "",
       password: "",
+      provaiderName: "",
+      accessToken: "",
+      expirationTime: "",
+      refreshToken: "",
       terms: true,
     },
 
@@ -41,8 +44,11 @@ function RegistrationPage(props: PaperProps) {
   });
 
   const navigate = useNavigate();
+  
   function sendRequest() {
     createUser(form.values).then(() => {
+      const newUser ={email:form.values.email, username:form.values.name}
+      setUserAndToken(newUser,form.values.accessToken)
       navigate("/");
     });
   }
@@ -53,6 +59,16 @@ function RegistrationPage(props: PaperProps) {
     try {
       const result = await signInWithPopup(auth, provider);
       console.log(result);
+      const { user } = result;
+      const accessToken = await user.getIdToken();
+      const idTokenResult = await user.getIdTokenResult();
+      form.values.name = user.displayName!;
+      form.values.email = user.email!;
+      form.values.provaiderName = user.displayName!;
+      form.values.accessToken = accessToken;
+      form.values.expirationTime = idTokenResult.expirationTime;
+      // form.values.refreshToken = idTokenResult.refreshToken;
+      sendRequest();
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +87,9 @@ function RegistrationPage(props: PaperProps) {
       </Text>
 
       <Group grow mb="md" mt="md">
-        <GoogleButton onClick={handleGoogleSignIn} radius="xl">Google</GoogleButton>
+        <GoogleButton onClick={handleGoogleSignIn} radius="xl">
+          Google
+        </GoogleButton>
       </Group>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
