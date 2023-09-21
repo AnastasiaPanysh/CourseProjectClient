@@ -7,11 +7,8 @@ import { useUserStorage } from '../../storage/userStorage';
 
 function Header() {
   const { isDark, setIsDark } = useTheme();
-  const { user, clearUserAndToken } = useUserStorage();
+  const { name, handleLogout } = useUserStorage();
 
-  const handleLogout = () => {
-    clearUserAndToken();
-  };
 
   return (
     <div className={style.wrapper}>
@@ -22,8 +19,11 @@ function Header() {
         WHAT SHOULD U WATCH/READ/PLAY
       </Text>
       <div className={style.containerBtns}>
-        {user ? (
+        {name ? (
+          <>
+          <Text>Hello {name}</Text>
           <Button onClick={handleLogout}>LogOut</Button>
+          </>
         ) : (
           <>
             <Link to="/login">
