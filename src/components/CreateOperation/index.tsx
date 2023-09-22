@@ -26,9 +26,6 @@ function CreateOperation() {
     setValue({ ...value, [event.target.name]: event.target.value });
   }
 
-  function sendRequest() {
-    createReview(value);
-  }
   async function handleClick() {
     if (img !== null) {
       const storageref = ref(storage, "images/" + img.name);
@@ -40,16 +37,15 @@ function CreateOperation() {
           console.error(error);
         });
     }
-  }
 
-  function uploadFile(arg0: FileWithPath, name: string): void {
-    throw new Error("Function not implemented.");
+    createReview(value);
   }
 
   return (
     <div className={style.wrapper}>
       <h2>Review title</h2>
       <Input
+        size="lg"
         name="title"
         onChange={changeInputValue}
         placeholder="review title"
@@ -57,6 +53,7 @@ function CreateOperation() {
 
       <h2>Name of film/book/game</h2>
       <Input
+        size="lg"
         name="name"
         onChange={changeInputValue}
         placeholder="review name"
@@ -80,6 +77,7 @@ function CreateOperation() {
 
       <h2>Description</h2>
       <Input
+        size="lg"
         name="description"
         onChange={changeInputValue}
         placeholder="review description"
@@ -87,6 +85,7 @@ function CreateOperation() {
 
       <h2>Grade</h2>
       <Input
+        size="lg"
         name="grade"
         onChange={changeInputValue}
         placeholder="review grade"
@@ -94,23 +93,22 @@ function CreateOperation() {
 
       <h2>Genre</h2>
       <Input
+        size="lg"
         name="genre"
         onChange={changeInputValue}
         placeholder="review genre"
       />
 
       <h2>Image</h2>
-      <Dropzone
-        // openRef={openRef}
-        onDrop={(files) => uploadFile(files[0], files[0].name)}
-      >
-        Перетащите файл сюда или нажмите для выбора
-      </Dropzone>
+      <div className={style["input-wrapper"]}>
+        <Input
+          size="lg"
+          type="file"
+          onChange={(e: any) => setImg(e.target.files[0])}
+        />
+      </div>
 
-      <input type="file" onChange={(e: any) => setImg(e.target.files[0])} />
-
-      <Button onClick={handleClick}>img</Button>
-      <Button onClick={sendRequest}>GO</Button>
+      <Button onClick={handleClick}>go</Button>
     </div>
   );
 }

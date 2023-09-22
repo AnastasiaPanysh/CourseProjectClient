@@ -59,10 +59,11 @@ function List({ searchString, expression }: any) {
     <div>
       {name ? (
         <>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginTop:"2%" }}>
           <Link to="/review" style={{ cursor: "pointer" }}>
             <span className="material-symbols-outlined">add</span>
           </Link>
-
+          </div>
           {paginatedList.map((el, index) => (
             <Item key={index} filmItem={el} />
           ))}
