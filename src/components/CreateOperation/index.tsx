@@ -1,12 +1,12 @@
-import { Input, Button } from "@mantine/core";
-import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
+import { Input, Button, Image } from "@mantine/core";
+import { Dropzone, FileWithPath, MIME_TYPES } from "@mantine/dropzone";
 import style from "./style.module.css";
 import React, { useState, useRef } from "react";
 import { useCreateReviewMutation } from "../../services/review";
-// import { getStorage, getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../firebase/index";
-import { ref } from "firebase/storage";
-
+import { IconChevronDown } from "@tabler/icons-react";
+import category from "../../storage/category.json";
 
 function CreateOperation() {
   const [createReview] = useCreateReviewMutation();
@@ -19,20 +19,8 @@ function CreateOperation() {
     genre: "",
     imageLink: "",
   });
-  // const storage = getStorage();
 
-  // async function uploadFile(file: Blob | ArrayBuffer | null, fileName: string) {
-  //   if (file instanceof Blob) {
-  //     const storageRef = ref(storage, `images/${fileName}`);
-  //     try {
-  //       await uploadBytes(storageRef, file);
-  //       const downloadURL = await getDownloadURL(storageRef);
-  //       setValue({ ...value, imageLink: downloadURL });
-  //     } catch (error) {
-  //       console.error("Ошибка при загрузке файла:", error);
-  //     }
-  //   }
-  // }
+  const [img, setImg] = useState<File | null>(null);
 
   function changeInputValue(event: { target: { name: any; value: any } }) {
     setValue({ ...value, [event.target.name]: event.target.value });
@@ -41,13 +29,22 @@ function CreateOperation() {
   function sendRequest() {
     createReview(value);
   }
-  function handleClick() {
-ref(storage, )
+  async function handleClick() {
+    if (img !== null) {
+      const storageref = ref(storage, "images/" + img.name);
+      uploadBytes(storageref, img)
+        .then((snapshot: any) => {
+          console.log("succesful");
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
   }
 
-  // const openRef = useRef<() => void>(null);
-
-  const [img, setImg] = useState("");
+  function uploadFile(arg0: FileWithPath, name: string): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <div className={style.wrapper}>
@@ -67,10 +64,19 @@ ref(storage, )
 
       <h2>Category</h2>
       <Input
+        size="lg"
         name="category"
-        onChange={changeInputValue}
+        component="select"
         placeholder="review category"
-      />
+        rightSection={<IconChevronDown />}
+      >
+        <option value="default">Category</option>
+        {category.map((el, index) => (
+          <option key={index} value={el.category}>
+            {el.category}
+          </option>
+        ))}
+      </Input>
 
       <h2>Description</h2>
       <Input
@@ -94,15 +100,16 @@ ref(storage, )
       />
 
       <h2>Image</h2>
-      {/* <Dropzone
-        openRef={openRef}
+      <Dropzone
+        // openRef={openRef}
         onDrop={(files) => uploadFile(files[0], files[0].name)}
       >
         Перетащите файл сюда или нажмите для выбора
-      </Dropzone> */}
-      {/* <input type="file" onChange={(e) => setImg(e.target.files[0])} /> */}
+      </Dropzone>
 
-      {/* <Button onClick={handleClick}>img</Button> */}
+      <input type="file" onChange={(e: any) => setImg(e.target.files[0])} />
+
+      <Button onClick={handleClick}>img</Button>
       <Button onClick={sendRequest}>GO</Button>
     </div>
   );

@@ -5,10 +5,10 @@ import CreateOperation from "../../components/CreateOperation";
 
 function CreateReview() {
   return (
-    <div className={style.wrapper}>
+    <>
       <Header />
-      <CreateOperation></CreateOperation>
-    </div>
+      <CreateOperation/>
+    </>
   );
 }
 
