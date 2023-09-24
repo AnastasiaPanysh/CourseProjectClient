@@ -45,7 +45,7 @@ function CreateOperation() {
   const openRef = useRef<() => void>(null);
 
   useEffect(() => {
-    // Обновляем текст в зависимости от значения img
+
     if (img) {
       openRef.current?.();
     }
