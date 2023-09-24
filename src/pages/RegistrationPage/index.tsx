@@ -19,6 +19,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../../services/user";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useUserStorage } from "../../storage/userStorage";
+import Header from "../../components/Header";
 
 function RegistrationPage(props: PaperProps) {
   const { handleLogin } =
@@ -77,6 +78,8 @@ function RegistrationPage(props: PaperProps) {
   };
 
   return (
+    <>
+    <Header/>
     <Paper
       style={{ width: "600px", margin: "0 auto" }}
       radius="md"
@@ -153,6 +156,7 @@ function RegistrationPage(props: PaperProps) {
         </Group>
       </form>
     </Paper>
+    </>
   );
 }
 

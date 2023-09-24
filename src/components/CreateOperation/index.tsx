@@ -1,4 +1,4 @@
-import { Input, Button, Image } from "@mantine/core";
+import { Input, Button, Image, Group } from "@mantine/core";
 import { Dropzone, FileWithPath, MIME_TYPES } from "@mantine/dropzone";
 import style from "./style.module.css";
 import React, { useState, useRef } from "react";
@@ -40,6 +40,7 @@ function CreateOperation() {
 
     createReview(value);
   }
+  const openRef = useRef<() => void>(null);
 
   return (
     <div className={style.wrapper}>
@@ -100,13 +101,11 @@ function CreateOperation() {
       />
 
       <h2>Image</h2>
-      <div className={style["input-wrapper"]}>
         <Input
           size="lg"
           type="file"
           onChange={(e: any) => setImg(e.target.files[0])}
         />
-      </div>
 
       <Button onClick={handleClick}>go</Button>
     </div>
