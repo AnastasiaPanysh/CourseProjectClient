@@ -29,7 +29,7 @@ function CreateOperation() {
   }
 
   async function handleClick() {
-    if (img !== null) {
+    if (img) {
       const storageref = ref(storage, "images/" + img.name);
       uploadBytes(storageref, img)
         .then((snapshot: any) => {
@@ -88,7 +88,7 @@ function CreateOperation() {
                 <Image
                   src={URL.createObjectURL(img)}
                   alt="Selected Image"
-                  style={{ maxWidth: "200px", height: "auto" }}
+                  style={{ maxWidth: "75px", height: "auto" }}
                 />
                 <Text size="xl" inline>
                   Selected: {img.name}
